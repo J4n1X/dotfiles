@@ -3,13 +3,21 @@ call plug#begin('~/.config/nvim/plugged')
 Plug 'morhetz/gruvbox'
 Plug 'ctrlpvim/ctrlp.vim'
 
-if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-else
-  Plug 'Shougo/deoplete.nvim'
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
-endif
+" main one
+Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
+" 9000+ Snippets
+Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
+
+" lua & third party sources -- See https://github.com/ms-jpq/coq.thirdparty
+" Need to **configure separately**
+
+Plug 'ms-jpq/coq.thirdparty', {'branch': '3p'}
+" - shell repl
+" - nvim lua api
+" - scientific calculator
+" - comment banner
+" - etc
+
 
 call plug#end()
 
@@ -18,11 +26,8 @@ color gruvbox
 " set background-style
 set bg=dark
 
-let g:deoplete#enable_at_startup = 1
-
-" deoplete configuration
-inoremap <TAB>   pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <S-TAB> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" COQ needs to run on start for autocompletion
+let g:coq_settings = { 'auto_start': 'shut-up' }
 
 set nocompatible
 filetype indent plugin on
